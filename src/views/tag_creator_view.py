@@ -3,6 +3,8 @@ from src.views.http_types.http_response import HttpResponse
 
 from src.controllers.tag_creator_controller import TagCreatorController
 
+from src.errors.error_handler import handle_errors
+
 class TagCreatorView:
     '''
         Responsability for interacting with HTTP
@@ -13,8 +15,8 @@ class TagCreatorView:
 
         body = http_request.body
 
-        if not body or body["product_code"]:
-            return HttpResponse(status_code=400, body={"message": "Body not found"})
+        if not body or not body['product_code']:
+            return handle_errors(Exception("'product_code'"))
 
         product_code = body["product_code"]
 
